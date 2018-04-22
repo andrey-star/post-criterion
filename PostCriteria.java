@@ -25,7 +25,6 @@ public class PostCriteria {
 			for (int j = i + 1; j < (1 << n); j++) {
 				if (!isBigger(i, j, n)) {
 					if (f[i] > f[j]) {
-						System.out.println(i + " " + j);
 						return false;
 					}
 				}
