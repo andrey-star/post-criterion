@@ -20,31 +20,12 @@ public class PostCriteria {
 		return false;
 	}
 
-	// public static boolean isMonotonous(int[] f, int n) {
-	// for (int i = 0; i < (1 << n); i++) {
-	// for (int j = i + 1; j < (1 << n); j++) {
-	// if (!isBigger(i, j, n)) {
-	// if (f[i] > f[j]) {
-	// System.out.println(i + " " + j);
-	// return false;
-	// }
-	// }
-	// }
-	// }
-	// return true;
-	// }
-
-	public static boolean isMonotonous(int[] a, int n) {
+	public static boolean isMonotonous(int[] f, int n) {
 		for (int i = 0; i < (1 << n); i++) {
-			for (int j = 0; j < (1 << n); j++) {
-				boolean isBigger = false;
-				for (int k = 0; k < n; k++) {
-					if (((i >> k) & 1) > ((j >> k) & 1)) {
-						isBigger = true;
-					}
-				}
-				if (!isBigger) {
-					if (a[i] > a[j]) {
+			for (int j = i + 1; j < (1 << n); j++) {
+				if (!isBigger(i, j, n)) {
+					if (f[i] > f[j]) {
+						System.out.println(i + " " + j);
 						return false;
 					}
 				}
@@ -101,40 +82,40 @@ public class PostCriteria {
 
 		Scanner in = new Scanner(System.in);
 		int n = in.nextInt();
-		
-		 int l = (1 << n);
-		 int[] f = new int[l];
-		
-		 for (int i = 0; i < l; i++) {
-		 f[i] = in.nextInt();
-		 }
-		
-		 in.close();
-		
-		 boolean isFull = isFull(f, n);
-		
-		 System.out.println("Preserves 0: " + isZeroPreserving(f, n));
-		 System.out.println("Preserves 1: " + isOnePreserving(f, n));
-		 System.out.println("Monotonous: " + isMonotonous(f, n));
-		 System.out.println("Self-dual: " + isSelfDual(f, n));
-		 System.out.println("Is Linear: " + isLinear(f, n));
-		 System.out.println("\nIs Full: " + isFull);
+
+		int l = (1 << n);
+		int[] f = new int[l];
+
+		for (int i = 0; i < l; i++) {
+			f[i] = in.nextInt();
+		}
+
+		in.close();
+
+		boolean isFull = isFull(f, n);
+
+		System.out.println("Preserves 0: " + isZeroPreserving(f, n));
+		System.out.println("Preserves 1: " + isOnePreserving(f, n));
+		System.out.println("Monotonous: " + isMonotonous(f, n));
+		System.out.println("Self-dual: " + isSelfDual(f, n));
+		System.out.println("Is Linear: " + isLinear(f, n));
+		System.out.println("\nIs Full: " + isFull);
 
 		// All full functions
 
-//		int c = 0;
-//		for (int i = 0; i < 1 << (1 << n); i++) {
-//			int[] table = new int[1 << n];
-//			for (int j = 0; j < 1 << n; j++) {
-//				table[j] = (i >> j) & 1;
-//			}
-//
-//			 if (isFull(table, n)) {
-//			 System.out.println(Arrays.toString(table));
-//			 c++;
-//			 }
-//		}
-//		System.out.println(c);
+		// int c = 0;
+		// for (int i = 0; i < 1 << (1 << n); i++) {
+		// int[] table = new int[1 << n];
+		// for (int j = 0; j < 1 << n; j++) {
+		// table[j] = (i >> j) & 1;
+		// }
+		//
+		// if (isFull(table, n)) {
+		// System.out.println(Arrays.toString(table));
+		// c++;
+		// }
+		// }
+		// System.out.println(c);
 
 	}
 
