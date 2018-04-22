@@ -20,11 +20,31 @@ public class PostCriteria {
 		return false;
 	}
 
-	public static boolean isMonotonous(int[] f, int n) {
+	// public static boolean isMonotonous(int[] f, int n) {
+	// for (int i = 0; i < (1 << n); i++) {
+	// for (int j = i + 1; j < (1 << n); j++) {
+	// if (!isBigger(i, j, n)) {
+	// if (f[i] > f[j]) {
+	// System.out.println(i + " " + j);
+	// return false;
+	// }
+	// }
+	// }
+	// }
+	// return true;
+	// }
+
+	public static boolean isMonotonous(int[] a, int n) {
 		for (int i = 0; i < (1 << n); i++) {
-			for (int j = i + 1; j < (1 << n); j++) {
-				if (!isBigger(i, j, n)) {
-					if (f[i] > f[j]) {
+			for (int j = 0; j < (1 << n); j++) {
+				boolean isBigger = false;
+				for (int k = 0; k < n; k++) {
+					if (((i >> k) & 1) > ((j >> k) & 1)) {
+						isBigger = true;
+					}
+				}
+				if (!isBigger) {
+					if (a[i] > a[j]) {
 						return false;
 					}
 				}
@@ -43,15 +63,15 @@ public class PostCriteria {
 	}
 
 	public static boolean isLinear(int[] f, int n) {
-		mark: for (int i = 0; i < (1 << (n + 1)); i++) { // all xor combinations
+		mark: for (int i = 0; i < (1 << (n + 1)); i++) { // all xor combinations (1 - take arg)
 			int[] res = new int[1 << n];
 			for (int k = 0; k < (1 << n); k++) { // all inputs
 				int ans = 0;
-				for (int j = 0; j < n + 1; j++) { // input parts, j = n refers to logical 1
-					int cur = ((i >> j) & 1); // one input bit
+				for (int j = 0; j < n + 1; j++) { // which arguments to take, j = n refers to logical 1
+					int cur = ((i >> j) & 1); // taking cur arg or not
 					if (cur == 1) {
 						if (j < n) {
-							ans ^= f[j];
+							ans ^= (k >> j);
 						} else {
 							ans ^= 1;
 						}
@@ -73,35 +93,35 @@ public class PostCriteria {
 	}
 
 	public static boolean isFull(int[] f, int n) {
-		return !(isZeroPreserving(f, n) || isOnePreserving(f, n) || isMonotonous(f, n) || isSelfDual(f, n) || isLinear(f, n));
+		return !(isZeroPreserving(f, n) || isOnePreserving(f, n) || isMonotonous(f, n) || isSelfDual(f, n)
+				|| isLinear(f, n));
 	}
 
 	public static void main(String[] args) {
 
 		Scanner in = new Scanner(System.in);
 		int n = in.nextInt();
-
-		int l = (1 << n);
-		int[] f = new int[l];
-
-		for (int i = 0; i < l; i++) {
-			f[i] = in.nextInt();
-		}
-
-		in.close();
-
-		boolean isFull = isFull(f, n);
-
-		System.out.println("Preserves 0: " + isZeroPreserving(f, n));
-		System.out.println("Preserves 1: " + isOnePreserving(f, n));
-		System.out.println("Monotonous: " + isMonotonous(f, n));
-		System.out.println("Self-dual: " + isSelfDual(f, n));
-		System.out.println("Is Linear: " + isLinear(f, n));
-		System.out.println("\nIs Full: " + isFull);
-
 		
+		 int l = (1 << n);
+		 int[] f = new int[l];
+		
+		 for (int i = 0; i < l; i++) {
+		 f[i] = in.nextInt();
+		 }
+		
+		 in.close();
+		
+		 boolean isFull = isFull(f, n);
+		
+		 System.out.println("Preserves 0: " + isZeroPreserving(f, n));
+		 System.out.println("Preserves 1: " + isOnePreserving(f, n));
+		 System.out.println("Monotonous: " + isMonotonous(f, n));
+		 System.out.println("Self-dual: " + isSelfDual(f, n));
+		 System.out.println("Is Linear: " + isLinear(f, n));
+		 System.out.println("\nIs Full: " + isFull);
+
 		// All full functions
-		
+
 //		int c = 0;
 //		for (int i = 0; i < 1 << (1 << n); i++) {
 //			int[] table = new int[1 << n];
@@ -109,10 +129,10 @@ public class PostCriteria {
 //				table[j] = (i >> j) & 1;
 //			}
 //
-//			if (isFull(table, n)) {
-//				System.out.println(Arrays.toString(table));
-//				c++;
-//			}
+//			 if (isFull(table, n)) {
+//			 System.out.println(Arrays.toString(table));
+//			 c++;
+//			 }
 //		}
 //		System.out.println(c);
 
