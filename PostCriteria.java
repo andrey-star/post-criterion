@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class PostCriteria {
+public class PostCriterion {
 
 	public static boolean isZeroPreserving(int[] f, int n) {
 		return f[0] == 0;
