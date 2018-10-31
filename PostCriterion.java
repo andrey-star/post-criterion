@@ -51,7 +51,7 @@ public class PostCriterion {
 					int cur = ((i >> j) & 1); // taking cur arg or not
 					if (cur == 1) {
 						if (j < n) {
-							ans ^= (k >> j);
+							ans ^= ((k >> j)) & 1;
 						} else {
 							ans ^= 1;
 						}
